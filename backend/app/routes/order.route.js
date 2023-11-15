@@ -1,21 +1,21 @@
-const express = require("express");
-const contacts = require("../controllers/book.controller.js");
+const express = require('express')
+const authMiddleware = require('../middlewares/auth.middleware')
+const ordersController = require('../controllers/orders.controller')
 
-const router = express.Router();
+const router = express.Router()
+
+router.use(authMiddleware)
 
 router
-  .route("/")
-  .get(() => {
-    throw new Error();
-  })
-  .post(() => {
-    throw new Error();
-  })
-  .delete(() => {
-    throw new Error();
-  });
-router.route("/:userId").get(() => {
-  throw new Error();
-});
+  .route('/')
+  .get(ordersController.getAllPaginate)
+  .post(ordersController.createOne)
+  .delete(ordersController.deleteOne)
 
-module.exports = router;
+router.route('/myOrders').get(ordersController.myOrders)
+
+router.route('/buyFromCart').get(ordersController.buyFromCart)
+
+router.route('/:id').get(ordersController.getOne).put(ordersController.updateOne)
+
+module.exports = router

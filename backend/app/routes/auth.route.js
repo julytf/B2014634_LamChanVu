@@ -1,14 +1,13 @@
-const express = require("express");
-const contacts = require("../controllers/book.controller.js");
+const express = require('express')
+const authMiddleware = require('../middlewares/auth.middleware')
+const authController = require('../controllers/auth.controller')
 
-const router = express.Router();
+const router = express.Router()
 
-router.route("/login").post(() => {
-  throw new Error();
-});
+router.route('/register').post(authController.register)
 
-router.route("/register").post(() => {
-  throw new Error();
-});
+router.route('/login').post(authController.login)
 
-module.exports = router;
+router.route('/getMe').get(authMiddleware, authController.getMe)
+
+module.exports = router

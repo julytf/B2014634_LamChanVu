@@ -13,8 +13,11 @@ const orderSchema = new Schema({
     type: Schema.ObjectId,
     ref: "User",
   },
-  status: String,
-  address: string,
+  status: {
+    type: String,
+    default: 'Chờ duyệt'
+  },
+  address: String,
   details: [orderDetailSchema],
 });
 

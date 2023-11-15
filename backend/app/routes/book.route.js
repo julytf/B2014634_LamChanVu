@@ -1,18 +1,28 @@
-const express = require("express");
-const contacts = require("../controllers/book.controller.js");
+const express = require("express")
+const booksController = require("../controllers/books.controller")
+const authMiddleware = require("../middlewares/auth.middleware")
+const isAdminMiddleware = require("../middlewares/isAdmin.middleware")
 
-const router = express.Router();
+const router = express.Router()
 
 router
   .route("/")
-  .get(contacts.findAll)
-  .post(contacts.create)
-  .delete(contacts.deleteAll);
+  .get(booksController.getAllPaginate)
 
 router
   .route("/:id")
-  .get(contacts.findOne)
-  .put(contacts.update)
-  .delete(contacts.delete);
+  .get(booksController.getOne)
 
-module.exports = router;
+router.use(authMiddleware)
+router.use(isAdminMiddleware)
+
+router
+  .route("/")
+  .post(booksController.createOne)
+
+router
+  .route("/:id")
+  .put(booksController.updateOne)
+  .delete(booksController.deleteOne)
+
+module.exports = router
