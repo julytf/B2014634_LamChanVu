@@ -23,8 +23,9 @@ exports.addBookToCart = async function (req, res, next) {
       details: [],
     })
   }
-  const index = cart.details.findIndex((item) => item?.book?._id === req?.params?.bookId)
-
+  const index = cart.details.findIndex((item) => {
+    return item?.book?.equals(req?.params?.bookId)
+  })
   if (index != -1) {
     cart.details[index].quantity++
   } else {

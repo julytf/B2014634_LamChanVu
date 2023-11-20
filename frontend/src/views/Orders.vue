@@ -85,12 +85,12 @@
 
     </section>
 
-    <footer-component />
+    <!-- <footer-component /> -->
   </div>
 </template>
 <script>
 import IndexNavbar from "@/components/Navbars/IndexNavbar.vue";
-import FooterComponent from "@/components/Footers/Footer.vue";
+// import FooterComponent from "@/components/Footers/Footer.vue";
 import { useCartStore } from '@/stores/cart.store'
 import OrderService from '@/services/order.service'
 
@@ -104,7 +104,7 @@ export default {
   },
   components: {
     IndexNavbar,
-    FooterComponent,
+    // FooterComponent,
   },
   methods: {
     async getOrders() {
