@@ -108,10 +108,10 @@
             <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
 
               <div v-if="order.details.length > 0">
-                {{ order.details[0]?.book?.name }}x{{ order.details[0]?.quantity }}
+                {{ truncate(order.details[0]?.book?.name, 25) }}x{{ order.details[0]?.quantity }}
               </div>
               <div v-if="order.details.length > 1">
-                {{ order.details[1]?.book?.name }}x{{ order.details[1]?.quantity }}
+                {{ truncate(order.details[1]?.book?.name, 25) }}x{{ order.details[1]?.quantity }}
               </div>
               <div v-if="order.details.length > 2">
                 ...
@@ -527,7 +527,7 @@ export default {
   },
   methods: {
     async getOrders(q) {
-      this.orders = (await this.orderService.getAll({ q, perPage: 999 }))?.data?.docs
+      this.orders = (await this.orderService.getAll({ q, perPage: 999 }))?.data?.docs.reverse()
     },
     async acceptOrder(id, data) {
       data.status = 'Đã duyệt'
@@ -552,6 +552,9 @@ export default {
       await this.orderService.deleteOne(id)
       this.refresh()
     },
+    truncate(str, n) {
+      return (str.length > n) ? str.slice(0, n - 1) + '…' : str;
+    }
   }
   , mounted() {
     this.getOrders()
